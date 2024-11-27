@@ -1,12 +1,12 @@
 .image-uploading {
-  position: relative;
+  position: absolute;
   display: inline-block;
 }
 
 .image-uploading img {
   max-width: 98% !important;
   filter: blur(5px);
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .image-uploading::before {
