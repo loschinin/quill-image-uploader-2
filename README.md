@@ -1,16 +1,7 @@
 # Quill-2 TS Image Uploader
-## quill-2-image-uploader-base64-off - Removing base64 Image after uploading
+## quill-2-image-uploader-base64-off 
+### - Replacing base64 Image after uploading with img src="your-link"
 
-But if you want you can turn on base64 - just pass boolean showBase64Image true like on the example:
-
-```tsx 
-    imageUploader: {
-      upload: async (file: File) => {
-        // pass your img link or set showBase64Image true to see base64img inside textarea
-        return { imageLink: 'img link', showBase64Image: false };
-      }
-    }
-```
 Adaptation for using Quill-2 and react-quill-new
 
 
@@ -112,3 +103,11 @@ export const MyComponent = ({ classes, theme, text, placeholder, setContent }: I
 };
 
 ```
+
+### If warnings in console, check this formats:
+#### 'imageBlot', // #5 Optinal if using custom formats
+#### 'sub',
+#### 'super',
+#### 'width',
+#### 'alt',
+#### 'bullet',
