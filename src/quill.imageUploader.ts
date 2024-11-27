@@ -2,7 +2,7 @@ import LoadingImage from "./blots/image.js";
 import Quill from 'quill';
 
 interface ImageUploaderOptions {
-    upload: (file: File) => Promise<{ imageLink: string; showBase64Image?: boolean }>;
+    upload: (file: File) => Promise<{ imageLink?: string; showBase64Image?: boolean }>;
 }
 
 interface QuillToolbar {
@@ -147,7 +147,7 @@ class ImageUploader {
         // Upload the file to the server
         this.options.upload(file).then(
             ({ imageLink, showBase64Image }) => {
-                this.insertToEditor(imageLink);
+                imageLink && this.insertToEditor(imageLink);
                 !showBase64Image && this.removeBase64Image(); // Remove base64 image if showBase64Image is false
             },
             error => {
