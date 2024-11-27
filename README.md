@@ -1,6 +1,18 @@
-# Quill ImageHandler Module
+# Quill-2 TS Image Uploader
+## quill-2-image-uploader-base64-off - Removing base64 Image after uploading
 
+But if you want you can turn on base64 - just pass boolean showBase64Image true like on the example:
+
+```tsx 
+    imageUploader: {
+      upload: async (file: File) => {
+        // pass your img link or set showBase64Image true to see base64img inside textarea
+        return { imageLink: 'img link', showBase64Image: false };
+      }
+    }
+```
 Adaptation for using Quill-2 and react-quill-new
+
 
 A module for Quill rich text editor to allow images to be uploaded to a server instead of being base64 encoded.
 Adds a button to the toolbar for users to click, also handles drag,dropped and pasted images.
@@ -30,7 +42,7 @@ Quill.register('modules/imageUploader', ImageUploader);
 
 const Scroll = Quill.import('blots/scroll') as any;
 
-// to dnd inside textarea
+// Fix for Quill-2 to dnd inside textarea after paste or drop
 class DraggableScroll extends Scroll {
   constructor(
     registry: { attributes: any; classes: any; tags: any; types: any },

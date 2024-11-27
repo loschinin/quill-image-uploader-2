@@ -32,25 +32,25 @@ class ImageUploader {
             console.warn('[Missing config] upload function that returns a promise is required');
         }
 
-        // Обработчик для кнопки добавления изображения в тулбаре
+        // Handler for the image upload button in the toolbar
         const toolbar = this.quill.getModule('toolbar') as QuillToolbar | null;
         if (toolbar) {
             toolbar.addHandler('image', this.selectLocalImage.bind(this));
         }
 
-        // Привязываем обработчики для событий "drop" и "paste"
+        // Bind event handlers for "drop" and "paste" events
         this.handleDrop = this.handleDrop.bind(this);
         this.handlePaste = this.handlePaste.bind(this);
         this.quill.root.addEventListener('drop', this.handleDrop, false);
         this.quill.root.addEventListener('paste', this.handlePaste, false);
     }
 
-    // Обработчик для выбора локального изображения
+    // Handler for selecting a local image
     selectLocalImage() {
         this.quill.focus();
         this.range = this.quill.getSelection();
 
-        // Создание скрытого элемента input для загрузки изображения
+        // Create a hidden input element for image upload
         this.fileHolder = document.createElement('input');
         this.fileHolder.setAttribute('type', 'file');
         this.fileHolder.setAttribute('accept', 'image/*');
@@ -65,7 +65,7 @@ class ImageUploader {
         });
     }
 
-    // Обработчик события "drop" для вставки изображений
+    // Handler for the "drop" event to insert images
     handleDrop(evt: DragEvent) {
         if (evt.dataTransfer && evt.dataTransfer.files && evt.dataTransfer.files.length) {
             evt.stopPropagation();
@@ -95,7 +95,7 @@ class ImageUploader {
         }
     }
 
-    // Обработчик события "paste" для вставки изображений из буфера обмена
+    // Handler for the "paste" event to insert images from the clipboard
     handlePaste(evt: ClipboardEvent) {
         // @ts-ignore
         let clipboard = evt.clipboardData || window.clipboardData;
@@ -123,7 +123,7 @@ class ImageUploader {
         }
     }
 
-    // Метод для чтения и загрузки файла
+    // Method for reading and uploading a file
     readAndUploadFile(file: File) {
         let isUploadReject = false;
         const fileReader = new FileReader();
@@ -134,7 +134,7 @@ class ImageUploader {
                 if (!isUploadReject) {
                     let base64ImageSrc = fileReader.result;
 
-                    typeof base64ImageSrc === 'string' && this.insertBase64Image(base64ImageSrc); // Вставляем base64 изображение
+                    typeof base64ImageSrc === 'string' && this.insertBase64Image(base64ImageSrc);
                 }
             },
             false
@@ -144,11 +144,11 @@ class ImageUploader {
             fileReader.readAsDataURL(file);
         }
 
-        // Загружаем файл на сервер
+        // Upload the file to the server
         this.options.upload(file).then(
             ({ imageLink, showBase64Image }) => {
                 this.insertToEditor(imageLink);
-                !showBase64Image && this.removeBase64Image(); // Удаляем base64 изображение если нет showBase64Image
+                !showBase64Image && this.removeBase64Image(); // Remove base64 image if showBase64Image is false
             },
             error => {
                 isUploadReject = true;
@@ -157,7 +157,7 @@ class ImageUploader {
         );
     }
 
-    // Обработчик изменения файла в input
+    // Handler for file changes in the input
     fileChanged() {
         const file = this.fileHolder?.files?.[0];
         if (file) {
@@ -165,7 +165,7 @@ class ImageUploader {
         }
     }
 
-    // Вставка base64 изображения в редактор
+    // Insert a base64 image into the editor
     insertBase64Image(url: string) {
         const range = this.range;
         if (range) {
@@ -178,15 +178,15 @@ class ImageUploader {
         }
     }
 
-    // Вставка изображения в редактор после успешной загрузки
+    // Insert the image into the editor after successful upload
     insertToEditor(url: string) {
         const range = this.range;
         const lengthToDelete = this.calculatePlaceholderInsertLength();
 
         if (range) {
-            // Удаляем placeholder изображение
+            // Remove the placeholder image
             this.quill.deleteText(range.index, lengthToDelete, 'user');
-            // Вставляем серверное изображение
+            // Insert the server image
             this.quill.insertEmbed(range.index, 'image', `${url}`, 'user');
             range.index++;
         }
@@ -194,7 +194,7 @@ class ImageUploader {
         this.quill.setSelection(range, 'user');
     }
 
-    // Вычисление длины placeholder изображения
+    // Calculate the length of the placeholder image
     calculatePlaceholderInsertLength() {
         // @ts-ignore
         return this.placeholderDelta.ops.reduce((accumulator, deltaOperation) => {
@@ -203,7 +203,7 @@ class ImageUploader {
         }, 0);
     }
 
-    // Удаление base64 изображения
+    // Remove the base64 image
     removeBase64Image() {
         const range = this.range;
         const lengthToDelete = this.calculatePlaceholderInsertLength();
@@ -211,7 +211,7 @@ class ImageUploader {
     }
 }
 
-// Привязываем ImageUploader к глобальному объекту для отладки
+// Attach ImageUploader to the global object for debugging
 // @ts-ignore
 window.ImageUploader = ImageUploader;
 

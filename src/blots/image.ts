@@ -1,46 +1,46 @@
 import Quill from 'quill';
 
-// Импортируем базовый класс для работы с блочными элементами
+// Import the base class for working with block elements
 const InlineBlot = Quill.import('blots/block') as any;
 
 class LoadingImage extends InlineBlot {
-    // Статический метод для создания элемента изображения src - base64
+    // Static method for creating an image element with src - base64
     static create(src: string | boolean) {
-        // Создаём базовый элемент с помощью родительского метода
+        // Create the base element using the parent method
         const node = super.create(src);
 
-        // Если источник изображения является булевым значением `true`, просто возвращаем элемент
+        // If the image source is a boolean `true`, simply return the element
         if (src === true) {
             return node;
         }
 
-        // Создаём элемент img и добавляем атрибут src
+        // Create an img element and set the src attribute
         const image = document.createElement('img');
         typeof src === 'string' && image.setAttribute('src', src);
         node.appendChild(image); // Добавляем изображение в узел
         return node;
     }
 
-    // Метод для удаления содержимого на указанном индексе и длине
+    // Method for deleting content at the specified index and length
     deleteAt(index: number, length: number) {
-        super.deleteAt(index, length); // Вызываем родительский метод для удаления
-        this.cache = {}; // Очищаем кеш (предполагается, что это свойство будет определено в другом месте)
+        super.deleteAt(index, length); // Call the parent method to delete
+        this.cache = {}; // Clear the cache (this property is assumed to be defined elsewhere)
     }
 
-    // Статический метод для получения значения элемента из DOM-узла
+    // Static method for getting the value of an element from the DOM node
     static value(domNode: HTMLElement) {
-        const { src, custom } = domNode.dataset; // Извлекаем значения атрибутов data-src и data-custom
-        return { src, custom }; // Возвращаем объект с извлечёнными данными
+        const { src, custom } = domNode.dataset; // Extract values from the data-src and data-custom attributes
+        return { src, custom }; // Return an object with the extracted data
     }
 }
 
-LoadingImage.blotName = 'imageBlot'; // Устанавливаем имя для блота
+LoadingImage.blotName = 'imageBlot'; // Set the blot name
 
-LoadingImage.className = 'image-uploading'; // Устанавливаем имя CSS-класса
+LoadingImage.className = 'image-uploading'; // Set the CSS class name
 
-LoadingImage.tagName = 'span'; // Устанавливаем имя тега
+LoadingImage.tagName = 'span'; // Set the tag name
 
-// Регистрируем кастомный формат для Quill
+// Register the custom format for Quill
 Quill.register({ 'formats/imageBlot': LoadingImage });
 
 export default LoadingImage;
