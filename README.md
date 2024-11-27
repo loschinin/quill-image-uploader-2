@@ -1,5 +1,7 @@
 # Quill ImageHandler Module
 
+Adaptation for using Quill-2 and react-quill-new
+
 A module for Quill rich text editor to allow images to be uploaded to a server instead of being base64 encoded.
 Adds a button to the toolbar for users to click, also handles drag,dropped and pasted images.
 
