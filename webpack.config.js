@@ -16,15 +16,9 @@ module.exports = [{
     },
     resolve: {
         extensions: ['.js', '.ts', '.json'],
-        fullySpecified: false, // Для решения проблем с импортом модулей
     },
     externals: {
-        quill: {
-            commonjs: 'quill',
-            commonjs2: 'quill',
-            amd: 'quill',
-            root: 'Quill',
-        },
+        quill: "Quill",
     },
     optimization: {
         minimize: true,
@@ -55,10 +49,15 @@ module.exports = [{
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
+                exclude: /node_modules\/(?!(quill)\/).*/,
                 use: {
                     loader: "babel-loader",
                 },
+            },
+            {
+                test: /\.ts?$/, // Правило для TypeScript
+                use: "ts-loader", // Используем ts-loader
+                exclude: /node_modules/,
             },
         ],
     },
