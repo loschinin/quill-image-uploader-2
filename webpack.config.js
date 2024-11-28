@@ -14,8 +14,16 @@ module.exports = [{
         //contentBase: './src',
         https: true,
     },
+    resolve: {
+        fullySpecified: false, // Для решения проблем с импортом модулей
+    },
     externals: {
-        quill: "Quill",
+        quill: {
+            commonjs: 'quill',
+            commonjs2: 'quill',
+            amd: 'quill',
+            root: 'Quill',
+        },
     },
     optimization: {
         minimize: true,
