@@ -1,6 +1,5 @@
-import LoadingImage from "./blots/image.js";
-
-type Quill = any;
+import LoadingImage from "./image";
+import Quill from 'quill';
 
 interface ImageUploaderOptions {
     upload: (file: File) => Promise<{ imageLink?: string; showBase64Image?: boolean }>;
@@ -77,10 +76,10 @@ class ImageUploader {
             const range = document.caretRangeFromPoint(evt.clientX, evt.clientY);
             if (selection && range) {
                 selection.setBaseAndExtent(
-                    range.startContainer,
-                    range.startOffset,
-                    range.startContainer,
-                    range.startOffset
+                  range.startContainer,
+                  range.startOffset,
+                  range.startContainer,
+                  range.startOffset
                 );
             }
 
@@ -131,15 +130,15 @@ class ImageUploader {
         const fileReader = new FileReader();
 
         fileReader.addEventListener(
-            'load',
-            () => {
-                if (!isUploadReject) {
-                    let base64ImageSrc = fileReader.result;
+          'load',
+          () => {
+              if (!isUploadReject) {
+                  let base64ImageSrc = fileReader.result;
 
-                    typeof base64ImageSrc === 'string' && this.insertBase64Image(base64ImageSrc);
-                }
-            },
-            false
+                  typeof base64ImageSrc === 'string' && this.insertBase64Image(base64ImageSrc);
+              }
+          },
+          false
         );
 
         if (file) {
@@ -148,14 +147,14 @@ class ImageUploader {
 
         // Upload the file to the server
         this.options.upload(file).then(
-            ({ imageLink, showBase64Image }) => {
-                imageLink && this.insertToEditor(imageLink);
-                !showBase64Image && this.removeBase64Image(); // Remove base64 image if showBase64Image is false
-            },
-            error => {
-                isUploadReject = true;
-                this.removeBase64Image();
-            }
+          ({ imageLink, showBase64Image }) => {
+              imageLink && this.insertToEditor(imageLink);
+              !showBase64Image && this.removeBase64Image(); // Remove base64 image if showBase64Image is false
+          },
+          error => {
+              isUploadReject = true;
+              this.removeBase64Image();
+          }
         );
     }
 
@@ -173,11 +172,10 @@ class ImageUploader {
         if (range) {
             // @ts-ignore
             this.placeholderDelta = this.quill.insertEmbed(
-                range.index,
-                // @ts-ignore
-                LoadingImage.blotName,
-                `${url}`,
-                'user'
+              range.index,
+              LoadingImage.blotName,
+              `${url}`,
+              'user'
             );
         }
     }

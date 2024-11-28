@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist"
+    "target": "ES5",          // Оставляем целевой стандарт ES5 для совместимости с более старыми браузерами
+    "module": "ESNext",       // Используем модульный стандарт ESNext
+    "moduleResolution": "node",
+    "outDir": "./dist",       // Выходная папка для скомпилированных файлов
+    "esModuleInterop": true,  // Поддержка импорта модулей в старом формате
+    "strict": true,           // Включение строгого режима
+    "lib": ["es2015", "dom"]  // Добавляем поддержку ES2015 и DOM API
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts"             // Все TypeScript файлы в папке src
+  ]
 }
