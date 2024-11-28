@@ -16,10 +16,11 @@ class LoadingImage extends InlineBlot {
       return node;
     }
 
-    // Create an img element and set the src attribute
     const image = document.createElement('img');
-    typeof src === 'string' && image.setAttribute('src', src);
-    node.appendChild(image); // Добавляем изображение в узел
+    if (typeof src === 'string') {
+      image.setAttribute('src', src);
+    }
+    node.appendChild(image); // Add the image to the node
     return node;
   }
 
@@ -28,7 +29,7 @@ class LoadingImage extends InlineBlot {
     // @ts-ignore
     super.deleteAt(index, length); // Call the parent method to delete
     // @ts-ignore
-    this.cache = {}; // Clear the cache (this property is assumed to be defined elsewhere)
+    this.cache = {}; // Clear the cache
   }
 
   // Static method for getting the value of an element from the DOM node
