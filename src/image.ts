@@ -1,25 +1,25 @@
 import Quill from 'quill';
 
 // Import the base class for working with block elements
-const Block = Quill.import('blots/block');
+const InlineBlot = Quill.import('blots/block') as any;
 
 // @ts-ignore
-class LoadingImage extends Block {
+class LoadingImage extends InlineBlot {
   // Static method for creating an image element with src - base64
-  static create(src) {
+  static create(src: string | boolean) {
     // Create the base element using the parent method
     // @ts-ignore
-    const node = super.create();
+    const node = super.create(src);
+
     // If the image source is a boolean `true`, simply return the element
     if (src === true) {
       return node;
     }
 
+    // Create an img element and set the src attribute
     const image = document.createElement('img');
-    if (typeof src === 'string') {
-      image.setAttribute('src', src);
-    }
-    node.appendChild(image); // Add the image to the node
+    typeof src === 'string' && image.setAttribute('src', src);
+    node.appendChild(image); // Добавляем изображение в узел
     return node;
   }
 
@@ -28,7 +28,7 @@ class LoadingImage extends Block {
     // @ts-ignore
     super.deleteAt(index, length); // Call the parent method to delete
     // @ts-ignore
-    this.cache = {}; // Clear the cache
+    this.cache = {}; // Clear the cache (this property is assumed to be defined elsewhere)
   }
 
   // Static method for getting the value of an element from the DOM node
