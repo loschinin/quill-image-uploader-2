@@ -1,16 +1,15 @@
 import Quill from 'quill';
 
 // Import the base class for working with block elements
-const InlineBlot = Quill.import('blots/block') as any;
+const Block = Quill.import('blots/block');
 
 // @ts-ignore
-class LoadingImage extends InlineBlot {
+class LoadingImage extends Block {
   // Static method for creating an image element with src - base64
-  static create(src: string | boolean) {
+  static create(src) {
     // Create the base element using the parent method
     // @ts-ignore
-    const node = super.create(src);
-
+    const node = super.create();
     // If the image source is a boolean `true`, simply return the element
     if (src === true) {
       return node;
