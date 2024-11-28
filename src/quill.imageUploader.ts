@@ -173,7 +173,7 @@ class ImageUploader {
             // @ts-ignore
             this.placeholderDelta = this.quill.insertEmbed(
               range.index,
-              'imageBlot',
+              LoadingImage.blotName,
               `${url}`,
               'user'
             );

@@ -6,7 +6,7 @@ const Block = Quill.import('blots/block');
 // @ts-ignore
 class LoadingImage extends Block {
   // Static method for creating an image element with src - base64
-  static create(src: string | boolean) {
+  static create(src) {
     // Create the base element using the parent method
     // @ts-ignore
     const node = super.create();
@@ -39,7 +39,7 @@ class LoadingImage extends Block {
 }
 
 // @ts-ignore
-// LoadingImage.blotName = 'imageBlot'; // Set the blot name
+LoadingImage.blotName = 'imageBlot'; // Set the blot name
 
 // @ts-ignore
 LoadingImage.className = 'image-uploading'; // Set the CSS class name
