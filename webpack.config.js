@@ -15,6 +15,7 @@ module.exports = [{
         https: true,
     },
     resolve: {
+        extensions: ['.js', '.ts', '.json'],
         fullySpecified: false, // Для решения проблем с импортом модулей
     },
     externals: {
