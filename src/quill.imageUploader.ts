@@ -1,5 +1,6 @@
 import LoadingImage from "./blots/image.js";
-import Quill from 'quill';
+
+type Quill = any;
 
 interface ImageUploaderOptions {
     upload: (file: File) => Promise<{ imageLink?: string; showBase64Image?: boolean }>;
@@ -115,6 +116,7 @@ class ImageUploader {
                         setTimeout(() => {
                             this.quill.focus();
                             this.range = this.quill.getSelection();
+                            // @ts-ignore
                             this.readAndUploadFile(file);
                         }, 0);
                     }
@@ -169,8 +171,10 @@ class ImageUploader {
     insertBase64Image(url: string) {
         const range = this.range;
         if (range) {
+            // @ts-ignore
             this.placeholderDelta = this.quill.insertEmbed(
                 range.index,
+                // @ts-ignore
                 LoadingImage.blotName,
                 `${url}`,
                 'user'
