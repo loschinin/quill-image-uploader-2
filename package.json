@@ -9,7 +9,8 @@
     "main": "dist/quill.imageUploader.js",
     "scripts": {
         "build": "babel src --out-dir dist",
-        "watch": "babel src --out-dir dist --watch"
+        "watch": "babel src --out-dir dist --watch",
+        "publish": "npm publish"
     },
     "babel": {
         "presets": [
